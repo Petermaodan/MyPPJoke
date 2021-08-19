@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.mooc.myppjoke.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_sofa"
+        android:name="com.mooc.myppjoke.ui.sofa.SofaFragment"
+        android:label="@string/title_sofa"
+        tools:layout="@layout/fragment_sofa" />
+
+    <activity
+        android:id="@+id/publishActivity"
+        android:name="com.mooc.myppjoke.ui.publish.PublishActivity"
+        android:label="activity_publish"
+        tools:layout="@layout/activity_publish" />
+
+    <fragment
+        android:id="@+id/navigation_find"
+        android:name="com.mooc.myppjoke.ui.find.FindFragment"
+        android:label="@string/title_find"
+        tools:layout="@layout/fragment_detail" />
+    <fragment
+        android:id="@+id/navigation_my"
+        android:name="com.mooc.myppjoke.ui.sofa.SofaFragment"
+        android:label="@string/title_my"
+        tools:layout="@layout/fragment_my" />
+
+</navigation>

@@ -1,0 +1,4 @@
+include ':libnetwork'
+include ':libcommon'
+include ':app'
+rootProject.name = "MyPPJoke"
