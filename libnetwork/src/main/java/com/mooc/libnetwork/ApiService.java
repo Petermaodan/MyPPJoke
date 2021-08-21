@@ -82,7 +82,7 @@ public class ApiService {
     }
 
     public static <T> GetRequest<T> get(String url){
-        return new GetReqest<>(sBaseUrl+url);
+        return new GetRequest<>(sBaseUrl+url);
     }
 
     public static <T> PostRequest<T> post(String url){
