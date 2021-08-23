@@ -1,4 +1,4 @@
-package com.mooc.libnetwork;
+package com.mooc.libnetwork.cache;
 
 //网络数据的序列化和反序列化
 
@@ -62,6 +62,32 @@ public class CacheManager {
             }
         }
         return new byte[0];
-
     }
+
+    public static <T> void delete(String key,T body){
+        Cache cache=new Cache();
+        cache.key=key;
+        cache.data=toByteArray(body);
+        CacheDatabase.get().getCache().delete(cache);
+    }
+
+    public static <T> void save(String key,T body){
+        Cache cache=new Cache();
+        cache.key=key;
+        cache.data=toByteArray(body);
+
+        CacheDatabase.get().getCache().save(cache);
+    }
+
+    public static Object getCache(String key){
+        Cache cache=CacheDatabase.get().getCache().getCache(key);
+        if (cache!=null&&cache.data!=null){
+            return toObject(cache.data);
+        }
+        return null;
+    }
+
+
+
+
 }

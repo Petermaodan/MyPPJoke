@@ -5,7 +5,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
+
+import com.mooc.libnetwork.cache.CacheManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -96,9 +99,9 @@ public abstract class Request<T,R extends Request> implements Cloneable {
             throw new RuntimeException("同步方法,response 返回值 类型必须设置");
         }
 
-//        if (mCacheStrategy==CACHE_ONLY){
-//            return readCache();
-//        }
+        if (mCacheStrategy==CACHE_ONLY){
+            return readCache();
+        }
         if (mCacheStrategy!=CACHE_ONLY){
             ApiResponse<T> result=null;
             try{
@@ -115,21 +118,32 @@ public abstract class Request<T,R extends Request> implements Cloneable {
         }
         return null;
     }
-    
-    
+
+    private ApiResponse<T> readCache() {
+        String key=TextUtils.isEmpty(cacheKey)?generateCacheKey():cacheKey;
+        Object cache= CacheManager.getCache(key);
+        ApiResponse<T> result=new ApiResponse<>();
+        result.status=304;
+        result.message="缓存获取成功";
+        result.body= (T) cache;
+        result.success=true;
+        return result;
+    }
+
+
     @SuppressLint("RestrictedApi")
     public void execute(final JsonCallback callback){
-//        if (mCacheStrategy!=NET_ONLY){
-//            ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
-//                @Override
-//                public void run() {
-//                    ApiResponse<T> response=readCache();
-//                    if (callback!=null&&response.body!=null){
-//                        callback.onCacheSuccess(response);
-//                    }
-//                }
-//            });
-//        }
+        if (mCacheStrategy!=NET_ONLY){
+            ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    ApiResponse<T> response=readCache();
+                    if (callback!=null&&response.body!=null){
+                        callback.onCacheSuccess(response);
+                    }
+                }
+            });
+        }
         if (mCacheStrategy!=CACHE_ONLY){
             getCall().enqueue(new Callback() {
                 @Override
@@ -180,21 +194,25 @@ public abstract class Request<T,R extends Request> implements Cloneable {
         result.message=message;
 
         if (mCacheStrategy!=NET_ONLY&&result.success&&result.body!=null&&result.body instanceof Serializable){
-//            saveCache(result.body);
+            saveCache(result.body);
         }
         return result;
     }
 
+    private void saveCache(T body) {
+        String key=TextUtils.isEmpty(cacheKey)?generateCacheKey():cacheKey;
+        CacheManager.save(key,body);
+    }
 
-//    private ApiResponse<T> readCache() {
-//        String key= TextUtils.isEmpty(cacheKey)?generateCacheKey():cacheKey;
-//        Object cache=CacheManager.
-//    }
 
     private String generateCacheKey() {
         cacheKey=UrlCreator.createUrlFromParams(mUrl,params);
         return cacheKey;
     }
 
-
+    @NonNull
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return (Request<T,R>)super.clone();
+    }
 }

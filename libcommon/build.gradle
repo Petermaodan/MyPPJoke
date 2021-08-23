@@ -101,7 +101,7 @@ dependencies {
     api 'androidx.work:work-runtime:2.2.0'
 
     //gesture imageview
-    api 'com.github.chrisbanes:PhotoView:2.3.0@aar'
+    //api 'com.github.chrisbanes:PhotoView:2.3.0@aar'
 
     //aliyun oss
     api 'com.aliyun.dpa:oss-android-sdk:+'
