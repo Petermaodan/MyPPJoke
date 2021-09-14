@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -25,6 +27,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public abstract class Request<T,R extends Request> implements Cloneable {
+
 
     protected String mUrl;
     protected HashMap<String,String> headers=new HashMap<>();
@@ -42,6 +45,7 @@ public abstract class Request<T,R extends Request> implements Cloneable {
     private int mCacheStrategy=CACHE_ONLY;
     private String cacheKey;
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({CACHE_ONLY, CACHE_FIRST, NET_CACHE, NET_ONLY})
     public @interface CacheStrategy{
 
@@ -49,6 +53,17 @@ public abstract class Request<T,R extends Request> implements Cloneable {
 
     public Request(String url){
         mUrl=url;
+    }
+
+
+    public R responseType(Type type){
+        mType=type;
+        return (R) this;
+    }
+
+    public R cacheStrategy(@CacheStrategy int cacheStrategy) {
+        mCacheStrategy = cacheStrategy;
+        return (R) this;
     }
 
     public R addParam(String key,Object value){
@@ -212,7 +227,7 @@ public abstract class Request<T,R extends Request> implements Cloneable {
 
     @NonNull
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return (Request<T,R>)super.clone();
+    public Request clone() throws CloneNotSupportedException {
+        return (Request<T, R>) super.clone();
     }
 }

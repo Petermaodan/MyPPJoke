@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.ui.PlayerControlView;
-import com.mooc.libcommon.global.utils.PixUtils;
+import com.mooc.libcommon.utils.PixUtils;
 import com.mooc.myppjoke.R;
 import com.mooc.myppjoke.exoplayer.IPlayTarget;
 

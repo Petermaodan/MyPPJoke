@@ -1,4 +1,4 @@
-package com.mooc.libcommon.global.utils;
+package com.mooc.libcommon.utils;
 
 import android.util.DisplayMetrics;
 

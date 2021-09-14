@@ -10,9 +10,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import com.mooc.myppjoke.R;
+import androidx.paging.PagedListAdapter;
 
-public class HomeFragment extends Fragment {
+import com.mooc.myppjoke.R;
+import com.mooc.myppjoke.model.Feed;
+import com.mooc.myppjoke.ui.AbsListFragment;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+
+public class HomeFragment extends AbsListFragment<Feed> {
 
     private HomeViewModel homeViewModel;
 
@@ -29,5 +34,20 @@ public class HomeFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    @Override
+    public PagedListAdapter getAdapter() {
+        return null;
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
     }
 }

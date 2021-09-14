@@ -47,4 +47,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(':libcommon')
+    implementation project(':libnetwork')
+
+    //QQ快捷登录
+    implementation files('libs/open_sdk_r6140_lite.jar')
+
+    //错误收集
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
 }
