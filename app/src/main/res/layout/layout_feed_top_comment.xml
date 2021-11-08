@@ -9,9 +9,15 @@
             name="comment"
             type="com.mooc.myppjoke.model.Comment" />
 
+        <variable
+            name="lifeCycleOwner"
+            type="androidx.lifecycle.LifecycleOwner"/>
+        <import type="com.mooc.myppjoke.ui.InteractionPresenter"/>
         <import type="android.view.View" />
 
         <import type="android.text.TextUtils"></import>
+
+        <import type="com.mooc.myppjoke.utils.StringConvert"/>
     </data>
 
 
@@ -79,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_2"
+                    android:onClick="@{()->InteractionPresenter.toggleCommentLike(lifeCycleOwner,comment)}"
                     android:src="@{comment.ugc.hasLiked?@drawable/icon_cell_liked:@drawable/icon_cell_like}"
                     tools:src="@drawable/icon_cell_liked" />
 

@@ -57,16 +57,20 @@ public class HomeViewModel extends AbsViewModel<Feed> {
             //加载初始化数据的
             Log.e("homeviewmodel","loadInitial");
             loadData(0,params.requestedLoadSize,callback);
+            witchCache=false;
         }
 
         @Override
         public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Feed> callback) {
-
+            //向后加载分页数据
+            Log.e("homeviewmodel","loadAfter");
+            loadData(params.key,params.requestedLoadSize,callback);
         }
 
         @Override
         public void loadBefore(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Feed> callback) {
-
+            //向前加载数据
+            callback.onResult(Collections.emptyList());
         }
 
         @NonNull

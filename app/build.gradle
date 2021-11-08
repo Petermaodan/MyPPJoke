@@ -53,6 +53,7 @@ dependencies {
     implementation files('libs/open_sdk_r6140_lite.jar')
 
     //错误收集
+    //错误收集
     implementation 'com.tencent.bugly:crashreport:latest.release'
     implementation 'com.tencent.bugly:nativecrashreport:latest.release'
 }
